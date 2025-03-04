@@ -1,114 +1,213 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Link from 'next/link';
+import Head from 'next/head';
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div style={{ 
+      backgroundColor: '#f5f5f7', 
+      minHeight: '100vh', 
+      fontFamily: 'Poppins, sans-serif',
+      backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1368&q=80")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed'
+    }}>
+      <Head>
+        <title>LocalLife - Experience cities like a local</title>
+        <meta name="description" content="Connect with locals for authentic experiences in your destination city." />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+      </Head>
+      
+      <header style={{ 
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+        padding: '20px', 
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)' 
+      }}>
+        <div style={{ 
+          maxWidth: '1200px', 
+          margin: '0 auto', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center' 
+        }}>
+          <h1 style={{ 
+            fontSize: '24px', 
+            fontWeight: 'bold', 
+            color: '#3b9b9b',
+            fontFamily: 'Poppins, sans-serif',
+            letterSpacing: '0.5px'
+          }}>LocalLifeHub.com</h1>
+          <nav>
+            <a 
+              href="/signin" 
+              style={{ 
+                color: '#3b9b9b', 
+                marginLeft: '20px', 
+                textDecoration: 'none', 
+                fontWeight: '500' 
+              }}
+            >
+              Sign In
+            </a>
+          </nav>
+        </div>
+      </header>
+      
+      <main style={{ 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '40px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: 'calc(100vh - 160px)'
+      }}>
+        <div style={{ 
+          backgroundColor: 'white', 
+          borderRadius: '24px', 
+          padding: '0', 
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          maxWidth: '400px',
+          width: '100%',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            backgroundImage: 'url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: '240px',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.6)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '20px'
+            }}>
+              <h2 style={{ 
+                fontSize: '28px', 
+                fontWeight: '600', 
+                marginBottom: '10px',
+                fontFamily: 'Poppins, sans-serif',
+                letterSpacing: '0.5px',
+                textAlign: 'center',
+                color: 'white'
+              }}>
+                Experience a city<br />like a local
+              </h2>
+              <p style={{ 
+                fontSize: '14px', 
+                lineHeight: '1.5', 
+                color: 'rgba(255, 255, 255, 0.8)', 
+                marginBottom: '0',
+                textAlign: 'center'
+              }}>
+                Connect with locals who will show you the authentic side of their city.
+              </p>
+            </div>
+          </div>
+          
+          <div style={{ padding: '30px 20px' }}>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '12px', 
+              marginBottom: '20px' 
+            }}>
+              <a 
+                href="/register/guest" 
+                style={{ 
+                  backgroundColor: '#3b9b9b', 
+                  color: 'white', 
+                  padding: '14px 20px', 
+                  borderRadius: '12px', 
+                  textDecoration: 'none', 
+                  fontWeight: '500',
+                  display: 'block',
+                  textAlign: 'center',
+                  boxShadow: '0 4px 6px -1px rgba(59, 155, 155, 0.3), 0 2px 4px -1px rgba(59, 155, 155, 0.2)',
+                  fontSize: '16px'
+                }}
+              >
+                Find a Local Host
+              </a>
+              
+              <a 
+                href="/register/host" 
+                style={{ 
+                  backgroundColor: 'white', 
+                  color: '#3b9b9b', 
+                  padding: '14px 20px', 
+                  borderRadius: '12px', 
+                  textDecoration: 'none', 
+                  fontWeight: '500',
+                  display: 'block',
+                  textAlign: 'center',
+                  border: '1px solid #3b9b9b',
+                  fontSize: '16px'
+                }}
+              >
+                Become a Host
+              </a>
+            </div>
+            
+            <p style={{ 
+              textAlign: 'center',
+              fontSize: '14px',
+              color: '#6b7280',
+              marginBottom: '10px'
+            }}>
+              Already have an account? 
+              <a 
+                href="/signin" 
+                style={{ 
+                  color: '#3b9b9b', 
+                  marginLeft: '5px',
+                  textDecoration: 'none',
+                  fontWeight: '500'
+                }}
+              >
+                Sign In
+              </a>
+            </p>
+            
+            <div style={{
+              width: '40px',
+              height: '4px',
+              backgroundColor: '#e5e7eb',
+              borderRadius: '2px',
+              margin: '20px auto 0'
+            }}></div>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      
+      <footer style={{ 
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+        padding: '20px', 
+        borderTop: '1px solid #e5e7eb',
+        marginTop: 'auto'
+      }}>
+        <div style={{ 
+          maxWidth: '1200px', 
+          margin: '0 auto', 
+          textAlign: 'center', 
+          color: '#6b7280', 
+          fontSize: '14px' 
+        }}>
+          © 2025 LocalLife. All rights reserved.
+        </div>
       </footer>
     </div>
   );
-}
+} 
