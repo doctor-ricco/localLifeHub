@@ -25,6 +25,7 @@
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.20",
     "crypto-browserify": "^3.12.1",
+    "eslint": "^9.21.0",
     "ignore-loader": "^0.1.2",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
