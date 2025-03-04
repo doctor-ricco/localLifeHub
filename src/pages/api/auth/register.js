@@ -1,12 +1,15 @@
-import { prisma } from '@/lib/prisma';
+import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcrypt';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
+  const prisma = new PrismaClient();
+
   try {
-    const { email, password, name, phone, address, bio, userType } = req.body;
+    const { email, password, name, userType = 'GUEST' } = req.body;
 
     // Verificar se o email já existe
     const existingUser = await prisma.user.findUnique({
@@ -17,22 +20,23 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'Email já cadastrado' });
     }
 
-    // Criar novo usuário
+    // Hash da senha
+    const hashedPassword = await hash(password, 10);
+
+    // Criar novo usuário com todos os campos obrigatórios
     const user = await prisma.user.create({
       data: {
         email,
-        password,
         name,
-        phone,
-        address,
-        bio,
-        userType,
+        password: hashedPassword,
+        userType: userType.toUpperCase(), // Converter para maiúsculas para garantir que seja 'HOST' ou 'GUEST'
       },
     });
 
-    res.status(200).json({ message: 'Usuário criado com sucesso' });
+    res.status(200).json({ message: 'Usuário criado com sucesso', user: { id: user.id, email: user.email } });
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ message: 'Erro ao criar usuário' });
+    res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
+  } finally {
+    await prisma.$disconnect();
   }
 } 

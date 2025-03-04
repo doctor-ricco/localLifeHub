@@ -103,7 +103,7 @@ export default function Home() {
                             padding: '20px'
                         }}>
                             <h2 style={{
-                                fontSize: '28px',
+                                fontSize: '24px',
                                 fontWeight: '600',
                                 marginBottom: '10px',
                                 fontFamily: 'Poppins, sans-serif',
@@ -111,7 +111,7 @@ export default function Home() {
                                 textAlign: 'center',
                                 color: 'white'
                             }}>
-                                Your favorite City<br />like a local
+                                Discover your favorite City<br />like a local
                             </h2>
                             <p style={{
                                 fontSize: '14px',
@@ -120,7 +120,8 @@ export default function Home() {
                                 marginBottom: '0',
                                 textAlign: 'center'
                             }}>
-                                Connect with people who will experience you the authentic side of their city. <br /><br />Travel like a pro, enjoy life like a local.                           </p>
+                                
+                                Connect with people who will show you <br /> the authentic side of their city. <br /><br />Travel like a pro, enjoy life like a local.                           </p>
                         </div>
                     </div>
 

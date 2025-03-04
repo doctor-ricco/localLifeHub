@@ -2,30 +2,44 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String           @id @default(cuid())
+  name           String
+  email          String           @unique
+  password       String
+  userType       UserType
+  phone          String?
+  address        String?
+  bio            String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  InterestToUser InterestToUser[]
+}
+
+model Interest {
+  id             String           @id @default(cuid())
+  name           String           @unique
+  category       String
+  InterestToUser InterestToUser[]
+}
+
+model InterestToUser {
+  A        String
+  B        String
+  Interest Interest @relation(fields: [A], references: [id], onDelete: Cascade)
+  User     User     @relation(fields: [B], references: [id], onDelete: Cascade)
+
+  @@id([A, B], map: "_InterestToUser_AB_pkey")
+  @@index([B], map: "_InterestToUser_B_index")
+  @@map("_InterestToUser")
 }
 
 enum UserType {
   HOST
   GUEST
 }
-
-model User {
-  id             String   @id @default(cuid())
-  name           String?
-  email          String   @unique
-  hashedPassword String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  interests      Interest[]
-}
-
-model Interest {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  category    String
-  users       User[]
-} 

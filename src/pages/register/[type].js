@@ -7,12 +7,37 @@ export default function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registration as:', type, { name, email, password });
-    // Registration logic here
-    router.push('/signin');
+    
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          userType: type,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Redirecionar para a página de login ou dashboard
+        router.push('/signin');
+      } else {
+        // Mostrar mensagem de erro
+        setError(data.message);
+      }
+    } catch (error) {
+      setError('Ocorreu um erro ao registrar. Tente novamente.');
+    }
   };
 
   if (!type) {
