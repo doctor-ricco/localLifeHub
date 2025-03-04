@@ -120,7 +120,7 @@ export default function Home() {
                                 marginBottom: '0',
                                 textAlign: 'center'
                             }}>
-                                
+
                                 Connect with people who will show you <br /> the authentic side of their city. <br /><br />Travel like a pro, enjoy life like a local.                           </p>
                         </div>
                     </div>
