@@ -38,11 +38,11 @@ export default function Home() {
                         fontFamily: 'Poppins, sans-serif',
                         letterSpacing: '0.5px'
                     }}>
-                    <a href="/signin">
+                        <a href="/signin">
 
-                    LocalLifeHub.com
-                    
-                    </a></h1>
+                            LocalLifeHub.com
+
+                        </a></h1>
 
 
                     <nav>
@@ -111,7 +111,7 @@ export default function Home() {
                                 textAlign: 'center',
                                 color: 'white'
                             }}>
-                                Experience <br />your favorite City<br />like a local
+                                Your favorite City<br />like a local
                             </h2>
                             <p style={{
                                 fontSize: '14px',
@@ -120,8 +120,7 @@ export default function Home() {
                                 marginBottom: '0',
                                 textAlign: 'center'
                             }}>
-                                Connect with locals who will show you the authentic side of their city.
-                            </p>
+                                Connect with locals who will experience you the authentic side of their city. <br /><br />Travel like a pro, enjoy life like a local.                           </p>
                         </div>
                     </div>
 
