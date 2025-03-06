@@ -19,7 +19,8 @@ export default async function handler(req, res) {
         email: session.user.email
       },
       include: {
-        interests: true
+        interests: true,
+        country: true
       }
     });
 

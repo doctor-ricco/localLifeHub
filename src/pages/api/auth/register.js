@@ -23,14 +23,13 @@ export default async function handler(req, res) {
     // Hash da senha
     const hashedPassword = await hash(password, 10);
 
-    // Criar novo usuário com validação do userType
+    // Criar novo usuário sem o campo country
     const user = await prisma.user.create({
       data: {
         email: email.toLowerCase(),
         name,
         hashedPassword,
         userType: userType?.toUpperCase() === 'HOST' ? 'HOST' : 'GUEST',
-        country: "",
       },
     });
 

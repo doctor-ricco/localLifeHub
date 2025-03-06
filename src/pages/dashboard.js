@@ -141,18 +141,24 @@ export default function Dashboard() {
                       <h3 className="text-sm font-medium text-gray-500">Contact Information</h3>
                       <div className="mt-2 space-y-2">
                         <p className="text-sm text-gray-900"> {userData?.email}</p>
-                        <p className="text-sm text-gray-900"> {userData?.phone || 'Not provided'}</p>
+                        <div className="space-y-2">
+                          {userData?.phone && (
+                            <p className="text-gray-600"> {userData.phone}</p>
+                          )}
+                          {userData?.address && (
+                            <p className="text-gray-600"> {userData.address}</p>
+                          )}
+                          {userData?.city && (
+                            <p className="text-gray-600"> {userData.city}</p>
+                          )}
+                          {userData?.country && (
+                            <p className="text-gray-600"> {userData.country.name}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                     
-                    <div>
-                      <h3 className="text-sm font-medium text-gray-500">Location</h3>
-                      <div className="mt-2 space-y-2">
-                        <p className="text-sm text-gray-900"> {userData?.address || 'Not provided'}</p>
-                        <p className="text-sm text-gray-900"> {userData?.city || 'Not provided'}</p>
-                        <p className="text-sm text-gray-900"> {userData?.country || 'Not provided'}</p>
-                      </div>
-                    </div>
+                    
                   </div>
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <button

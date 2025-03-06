@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
 
-    const { phone, address, city, country, bio, interests } = req.body;
+    const { phone, address, city, countryId, bio, interests } = req.body;
 
     // Valida o telefone se fornecido
     if (phone) {
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
           phone,
           address,
           city,
-          country,
+          countryId,
           bio,
           interests: {
             // Primeiro desconecta todos os interesses existentes
@@ -50,7 +50,8 @@ export default async function handler(req, res) {
           }
         },
         include: {
-          interests: true
+          interests: true,
+          country: true
         }
       });
 
@@ -66,11 +67,12 @@ export default async function handler(req, res) {
         phone,
         address,
         city,
-        country,
+        countryId,
         bio
       },
       include: {
-        interests: true
+        interests: true,
+        country: true
       }
     });
 

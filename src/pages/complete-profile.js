@@ -23,6 +23,8 @@ export default function CompleteProfile() {
     interests: []
   });
 
+  const [countries, setCountries] = useState([]);
+
   const interests = [
     'Photography', 'Cooking', 'Travel', 'Music',
     'Sports', 'Reading', 'Art', 'Technology'
@@ -40,6 +42,15 @@ export default function CompleteProfile() {
       setActiveSection(router.query.section);
     }
   }, [router.query.section]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const response = await fetch('/api/countries');
+      const data = await response.json();
+      setCountries(data);
+    };
+    fetchCountries();
+  }, []);
 
   if (status === 'loading' || (status === 'unauthenticated' && !hasCheckedSession.current)) {
     return <div>Loading...</div>;
@@ -274,13 +285,20 @@ export default function CompleteProfile() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Country
                     </label>
-                    <input
-                      type="text"
-                      value={personalInfo.country}
-                      onChange={(e) => setPersonalInfo({ ...personalInfo, country: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-gray-900 bg-white"
-                      placeholder="Enter your country"
-                    />
+                    <select
+                      value={personalInfo.countryId || ''}
+                      onChange={(e) => setPersonalInfo({ ...personalInfo, countryId: e.target.value })}
+                      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 bg-white ${
+                        personalInfo.countryId ? 'text-gray-900' : 'text-gray-400'
+                      }`}
+                    >
+                      <option value="" className="text-gray-400">Select a country</option>
+                      {countries.map((country) => (
+                        <option key={country.id} value={country.id} className="text-gray-900">
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </>

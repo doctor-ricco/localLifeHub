@@ -12,20 +12,28 @@ enum UserType {
   GUEST
 }
 
+model Country {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  code      String   @unique // código ISO do país (ex: BR, PT, US)
+  users     User[]
+}
+
 model User {
-  id             String     @id @default(cuid())
-  name           String
-  email          String     @unique
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
   hashedPassword String
-  userType       UserType   @default(GUEST)
+  userType       UserType  @default(GUEST)
   phone          String?
   address        String?
   city           String?
-  country        String?
   bio            String?
   interests      Interest[]
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  country        Country?  @relation(fields: [countryId], references: [id])
+  countryId      String?
 }
 
 model Interest {

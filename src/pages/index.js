@@ -213,7 +213,7 @@ export default function Home() {
                     color: '#6b7280',
                     fontSize: '14px'
                 }}>
-                    © 2025 LocalLife. All rights reserved.
+                    © 2025 LocalLifeHub. All rights reserved.
                 </div>
             </footer>
         </div>
