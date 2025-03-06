@@ -1,6 +1,59 @@
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function SignIn() {
+  const router = useRouter();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log('Tentando login com:', { email }); // não logue a senha
+
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      console.log('Resultado do login:', result);
+
+      if (result.error) {
+        setError(result.error);
+      } else {
+        // Verificar se o perfil está completo
+        const profileResponse = await fetch('/api/user/profile');
+        const profileData = await profileResponse.json();
+        
+        // Verificar campos obrigatórios
+        const isProfileComplete = profileData.user && (
+          profileData.user.phone ||
+          profileData.user.address ||
+          profileData.user.city ||
+          (profileData.user.interests && profileData.user.interests.length > 0) ||
+          profileData.user.bio
+        );
+
+        // Redirecionar baseado no estado do perfil
+        router.push(isProfileComplete ? '/dashboard' : '/complete-profile');
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+      setError('Ocorreu um erro ao fazer login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div style={{ 
       backgroundColor: '#f5f5f7', 
@@ -59,7 +112,19 @@ export default function SignIn() {
         </div>
         
         <div style={{ padding: '30px 20px' }}>
-          <form>
+          {error && (
+            <div style={{ 
+              backgroundColor: '#fee2e2', 
+              color: '#dc2626',
+              padding: '12px',
+              borderRadius: '8px',
+              marginBottom: '20px'
+            }}>
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '20px' }}>
               <label style={{ 
                 display: 'block', 
@@ -72,6 +137,7 @@ export default function SignIn() {
               </label>
               <input 
                 type="email" 
+                name="email"
                 style={{ 
                   width: '100%', 
                   padding: '12px 16px', 
@@ -114,6 +180,7 @@ export default function SignIn() {
               </div>
               <input 
                 type="password" 
+                name="password"
                 style={{ 
                   width: '100%', 
                   padding: '12px 16px', 
@@ -131,14 +198,15 @@ export default function SignIn() {
             
             <button 
               type="submit" 
+              disabled={isLoading}
               style={{ 
                 width: '100%', 
                 padding: '14px', 
-                backgroundColor: '#3b9b9b', 
+                backgroundColor: isLoading ? '#94a3b8' : '#3b9b9b', 
                 color: 'white', 
                 border: 'none', 
                 borderRadius: '12px', 
-                cursor: 'pointer',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
                 fontSize: '16px',
                 fontWeight: '500',
                 boxShadow: '0 4px 6px -1px rgba(59, 155, 155, 0.3), 0 2px 4px -1px rgba(59, 155, 155, 0.2)',
@@ -147,7 +215,7 @@ export default function SignIn() {
               onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              Go
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
           
