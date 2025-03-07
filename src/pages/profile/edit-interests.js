@@ -62,19 +62,29 @@ export default function EditInterests() {
     setError('');
 
     try {
+      console.log('Enviando interesses:', selectedInterests);
+      
       const response = await fetch('/api/user/update-profile', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
         body: JSON.stringify({ interests: selectedInterests })
       });
 
+      const data = await response.json();
+      console.log('Resposta da API:', data);
+
       if (response.ok) {
-        router.push('/dashboard');
+        // Usar location.replace para forçar um refresh completo
+        window.location.replace('/dashboard');
       } else {
-        throw new Error('Failed to update interests');
+        throw new Error(data.message || 'Failed to update interests');
       }
     } catch (error) {
-      setError('Failed to update interests');
+      console.error('Erro ao atualizar interesses:', error);
+      setError(error.message || 'Failed to update interests');
     } finally {
       setIsSubmitting(false);
     }
@@ -89,84 +99,126 @@ export default function EditInterests() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="px-6 py-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Edit Interests</h2>
-          
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
-              {error}
+    <div className="min-h-screen bg-white">
+      <nav className="bg-white border-b border-[#8ee2e2]/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex items-center">
+              <img
+                src="/images/logo.png"
+                alt="LocalLifeHub Logo"
+                className="h-8 w-8 mr-2"
+              />
+              <h1 className="text-2xl tracking-wide">
+                <span className="text-[#2A8A8A] font-bold">Local</span>
+                <span className="text-[#2A8A8A] font-bold">life</span>
+                <span className="text-[#5BBABA] font-extralight">Hub</span>
+              </h1>
             </div>
-          )}
-          
-          <div className="mb-2 text-sm text-gray-500">
-            Selected: {selectedInterests.length}/{MAX_INTERESTS}
-          </div>
-
-          <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {availableInterests.map((interest) => {
-                const isSelected = selectedInterests.includes(interest.name);
-                const isDisabled = selectedInterests.length >= MAX_INTERESTS && !isSelected;
-                
-                return (
-                  <label
-                    key={interest.id}
-                    className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${
-                      isSelected 
-                        ? 'bg-primary-50 border-primary-200 text-primary-900'
-                        : isDisabled
-                          ? 'bg-gray-100 border-gray-200 cursor-not-allowed'
-                          : 'bg-white border-gray-200 hover:bg-gray-50 text-gray-900'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      className="hidden"
-                      checked={isSelected}
-                      disabled={isDisabled}
-                      onChange={() => toggleInterest(interest.name)}
-                    />
-                    <div className="flex items-center">
-                      <span className="material-icons text-gray-500 mr-2 text-lg">
-                        {interest.icon || 'interests'}
-                      </span>
-                      <span className={`text-sm ${
-                        isSelected
-                          ? 'text-primary-700'
-                          : isDisabled
-                            ? 'text-gray-400'
-                            : 'text-gray-700'
-                      }`}>
-                        {interest.name}
-                      </span>
-                    </div>
-                  </label>
-                );
-              })}
-            </div>
-
-            <div className="flex justify-end space-x-4">
+            <div className="flex items-center space-x-4">
               <button
-                type="button"
                 onClick={() => router.push('/dashboard')}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
-                disabled={isSubmitting}
+                className="text-[#229494] hover:text-[#229494] px-3 py-2 text-md flex items-center"
               >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md disabled:opacity-50"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Saving...' : 'Save Changes'}
+                <span className="material-icons text-sm text-[#229494] mr-1">dashboard</span>
+                Dashboard
               </button>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      <main
+        className="relative min-h-[calc(100vh-4rem)]"
+        style={{
+          backgroundImage: `
+          linear-gradient(to bottom, rgba(63, 63, 63, 0.2), rgba(63, 63, 63, 0.3)),
+            url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+          `,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md border border-[#8ee2e2]/20 p-6">
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Edit Interests</h1>
+              <p className="text-gray-600">Select your interests to connect with like-minded people</p>
+            </div>
+
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Your Interests
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {availableInterests.map((interest) => {
+                      const isSelected = selectedInterests.includes(interest.name);
+                      const isDisabled = selectedInterests.length >= MAX_INTERESTS && !isSelected;
+                      
+                      return (
+                        <div key={interest.id} className="relative">
+                          <input
+                            type="checkbox"
+                            id={`interest-${interest.id}`}
+                            checked={isSelected}
+                            disabled={isDisabled}
+                            onChange={() => toggleInterest(interest.name)}
+                            className="sr-only"
+                          />
+                          <label
+                            htmlFor={`interest-${interest.id}`}
+                            className={`flex items-center p-3 rounded-md cursor-pointer transition-colors ${
+                              isSelected 
+                                ? 'bg-[#229494] text-white'
+                                : isDisabled
+                                  ? 'bg-gray-100 border-gray-200 cursor-not-allowed'
+                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            <span className="material-icons text-sm mr-2">
+                              {interest.icon || 'interests'}
+                            </span>
+                            {interest.name}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-2 text-sm text-gray-500">
+                    Selected: {selectedInterests.length}/{MAX_INTERESTS}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-between pt-4 border-t border-gray-200 mt-6">
+                <button
+                  type="button"
+                  onClick={() => router.push('/dashboard')}
+                  className="px-4 py-2 text-sm border border-[#3b9b9b] bg-white text-[#3b9b9b] hover:bg-[#3b9b9b]/10 rounded-md transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors"
+                  disabled={isSubmitting || selectedInterests.length === 0}
+                >
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
   );
 } 

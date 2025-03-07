@@ -61,12 +61,21 @@ export default function Dashboard() {
     if (session?.user?.email) {
       fetchUserData();
     }
-  }, [status, session]);
+
+    // Verificar se há um parâmetro refresh na URL
+    if (router.query.refresh === 'true') {
+      // Remover o parâmetro da URL sem recarregar a página
+      router.replace('/dashboard', undefined, { shallow: true });
+    }
+  }, [status, session, router.query.refresh]);
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch('/api/user/profile');
+      // Adicionar um timestamp para evitar cache
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/user/profile?t=${timestamp}`);
       const data = await response.json();
+      console.log('Dados do usuário atualizados:', data.user);
       setUserData(data.user);
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -90,13 +99,39 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-[#2fb4b4]">LocalLifeHub</h1>
+              <img
+                src="/images/logo.png"
+                alt="LocalLifeHub Logo"
+                className="h-8 w-8 mr-2"
+              />
+              <h1 className="text-2xl tracking-wide">
+                <span className="text-[#2A8A8A] font-bold">Local</span>
+                <span className="text-[#2A8A8A] font-bold">life</span>
+                <span className="text-[#5BBABA] font-extralight">Hub</span>
+              </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">{session?.user?.email}</span>
+              <div className="flex items-center bg-[#2A8A8A]/10 px-4 py-2 rounded-md">
+                <span className="material-icons text-[#2A8A8A] mr-2 text-md">person</span>
+                <span className="text-gray-700">
+                  Welcome, <span className="font-semibold text-[#2A8A8A]">{userData?.name || 'User'}</span>!
+                </span>
+              </div>
+
+              {/* Adicionar botão "Find a Host" apenas para guests */}
+              {userData?.userType?.toLowerCase() === 'guest' && (
+                <button
+                  onClick={() => router.push('/find-host')}
+                  className="flex items-center px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors"
+                >
+                  <span className="material-icons text-sm mr-1">travel_explore</span>
+                  Find a Host
+                </button>
+              )}
+
               <button
                 onClick={() => signOut()}
-                className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md"
+                className="px-4 py-2 text-sm border border-[#3b9b9b] bg-white text-[#3b9b9b] hover:bg-[#3b9b9b] hover:text-white hover:border-[#3b9b9b] rounded-md"
               >
                 Logout
               </button>
@@ -106,12 +141,15 @@ export default function Dashboard() {
       </nav>
 
       {/* Main Content com imagem de fundo e gradiente */}
-      <main 
+      <main
         className="relative min-h-[calc(100vh-4rem)]"
         style={{
+          // Gradiente para sobrepôr ao background image
+          // linear-gradient(to bottom right, rgba(117, 212, 212, 0.9), rgba(142, 226, 226, 0.85), rgba(167, 235, 235, 0.8)),
+
           backgroundImage: `
-            linear-gradient(to bottom right, rgba(117, 212, 212, 0.9), rgba(142, 226, 226, 0.85), rgba(167, 235, 235, 0.8)),
-            url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+          linear-gradient(to bottom, rgba(63, 63, 63, 0.2), rgba(63, 63, 63, 0.3)),
+          url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -122,11 +160,11 @@ export default function Dashboard() {
           <div className="px-4 py-6 sm:px-0">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Profile Card */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
                 <div className="p-6">
                   <div className="flex items-center space-x-4">
                     <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
-                      <span className="text-xl text-primary-600">
+                      <span className="text-xl text-[#229494]">
                         {userData?.name?.[0]?.toUpperCase() || '?'}
                       </span>
                     </div>
@@ -135,35 +173,36 @@ export default function Dashboard() {
                       <p className="text-sm text-gray-500">{userData?.userType}</p>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 space-y-4">
                     <div>
-                      <h3 className="text-sm font-medium text-gray-500">Contact Information</h3>
+                      <h3 className="font-medium text-gray-700">Contact Information</h3>
+                      <hr className="my-2 border-gray-300" />
                       <div className="mt-2 space-y-2">
-                        <p className="text-sm text-gray-900"> {userData?.email}</p>
+                        <p className="text-gray-600">Email: {userData?.email}</p>
                         <div className="space-y-2">
                           {userData?.phone && (
-                            <p className="text-gray-600"> {userData.phone}</p>
+                            <p className="text-gray-600">Phone: {userData.phone}</p>
                           )}
                           {userData?.address && (
-                            <p className="text-gray-600"> {userData.address}</p>
+                            <p className="text-gray-600">Address: {userData.address}</p>
                           )}
                           {userData?.city && (
-                            <p className="text-gray-600"> {userData.city}</p>
+                            <p className="text-gray-600">City: {userData.city}</p>
                           )}
                           {userData?.country && (
-                            <p className="text-gray-600"> {userData.country.name}</p>
+                            <p className="text-gray-600">Country: {userData.country.name}</p>
                           )}
                         </div>
                       </div>
                     </div>
-                    
-                    
+
+
                   </div>
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => router.push('/profile/edit-personal')}
-                      className="w-full px-4 py-2 text-sm bg-primary-50 text-primary-600 rounded-md hover:bg-primary-100 transition-colors flex items-center justify-center gap-2"
+                      className="w-full px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -175,14 +214,15 @@ export default function Dashboard() {
               </div>
 
               {/* Interests Card */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
                 <div className="p-6">
                   <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Interests</h2>
+                  <hr className="my-2 border-gray-200" />
                   <div className="flex flex-wrap gap-2 min-h-[30px]">
                     {userData?.interests?.map((interest) => (
                       <span
                         key={interest.id}
-                        className="inline-flex items-center px-2 py-[1px] rounded text-xs font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+                        className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium bg-[#229494]/10 text-[#229494] hover:bg-[#229494]/20 transition-colors"
                       >
                         {interestIcons[interest.name]}
                         {interest.name}
@@ -197,7 +237,7 @@ export default function Dashboard() {
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => router.push('/profile/edit-interests')}
-                      className="w-full px-4 py-2 text-sm bg-primary-50 text-primary-600 rounded-md hover:bg-primary-100 transition-colors flex items-center justify-center gap-2"
+                      className="w-full px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -209,9 +249,10 @@ export default function Dashboard() {
               </div>
 
               {/* Bio Card */}
-              <div className="bg-white/60 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
                 <div className="p-6">
                   <h2 className="text-lg font-semibold text-gray-900 mb-4">About You</h2>
+                  <hr className="my-2 border-gray-300" />
                   <div className="min-h-[100px]">
                     <p className="text-gray-600">
                       {userData?.bio || 'No bio provided yet.'}
@@ -220,7 +261,7 @@ export default function Dashboard() {
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => router.push('/profile/edit-bio')}
-                      className="w-full px-4 py-2 text-sm bg-primary-50 text-primary-600 rounded-md hover:bg-primary-100 transition-colors flex items-center justify-center gap-2"
+                      className="w-full px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -232,7 +273,7 @@ export default function Dashboard() {
               </div>
 
               {/* Activity Card */}
-              <div className="md:col-span-3 bg-white/60 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
+              <div className="md:col-span-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
                 <div className="p-6">
                   <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
                   <div className="border-t border-gray-200">

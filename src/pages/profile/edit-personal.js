@@ -75,98 +75,140 @@ export default function EditPersonal() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="px-6 py-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Edit Personal Information</h2>
-          
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
-              {error}
+    <div className="min-h-screen bg-white">
+      <nav className="bg-white border-b border-[#8ee2e2]/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex items-center">
+              <img
+                src="/images/logo.png"
+                alt="LocalLifeHub Logo"
+                className="h-8 w-8 mr-2"
+              />
+              <h1 className="text-2xl tracking-wide">
+                <span className="text-[#2A8A8A] font-bold">Local</span>
+                <span className="text-[#2A8A8A] font-bold">life</span>
+                <span className="text-[#5BBABA] font-extralight">Hub</span>
+              </h1>
             </div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 text-gray-900 bg-white"
-                  placeholder="+1 234-567-8900"
-                />
-              
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Address
-                </label>
-                <input
-                  type="text"
-                  value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 text-gray-900 bg-white"
-                  placeholder="Enter your street address"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  City
-                </label>
-                <input
-                  type="text"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 text-gray-900 bg-white"
-                  placeholder="Enter your city name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Country
-                </label>
-                <select
-                  value={formData.countryId || ''}
-                  onChange={(e) => setFormData({ ...formData, countryId: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500 text-gray-900 bg-white"
-                >
-                  <option value="">Select a country</option>
-                  {countries.map((country) => (
-                    <option key={country.id} value={country.id}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-4 mt-6">
+            <div className="flex items-center space-x-4">
               <button
-                type="button"
                 onClick={() => router.push('/dashboard')}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
-                disabled={isSubmitting}
+                className="text-[#229494] hover:text-[#229494] px-3 py-2 text-md flex items-center"
               >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md disabled:opacity-50"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Saving...' : 'Save Changes'}
+                <span className="material-icons text-sm text-[#229494] mr-1">dashboard</span>
+                Dashboard
               </button>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      <main
+        className="relative min-h-[calc(100vh-4rem)]"
+        style={{
+          backgroundImage: `
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
+            url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+          `,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md border border-[#8ee2e2]/20 p-6">
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Edit Personal Information</h1>
+              <p className="text-gray-600">Update your personal details</p>
+            </div>
+
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-2 border border-[#229494]/30 rounded-md focus:ring-[#229494] focus:border-[#229494] text-gray-700"
+                    placeholder="+1 234-567-8900"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    className="w-full px-4 py-2 border border-[#229494]/30 rounded-md focus:ring-[#229494] focus:border-[#229494] text-gray-700"
+                    placeholder="Enter your street address"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    className="w-full px-4 py-2 border border-[#229494]/30 rounded-md focus:ring-[#229494] focus:border-[#229494] text-gray-700"
+                    placeholder="Enter your city name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Country
+                  </label>
+                  <select
+                    value={formData.countryId || ''}
+                    onChange={(e) => setFormData({ ...formData, countryId: e.target.value })}
+                    className="w-full px-4 py-2 border border-[#229494]/30 rounded-md focus:ring-[#229494] focus:border-[#229494] text-gray-700"
+                  >
+                    <option value="">Select a country</option>
+                    {countries.map((country) => (
+                      <option key={country.id} value={country.id}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-between pt-4 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => router.push('/dashboard')}
+                  className="px-4 py-2 text-sm border border-[#3b9b9b] bg-white text-[#3b9b9b] hover:bg-[#3b9b9b]/10 rounded-md transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
   );
 } 

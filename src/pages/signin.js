@@ -218,7 +218,7 @@ export default function SignIn() {
                 onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
                 onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                {isLoading ? 'Entrando...' : 'Entrar'}
+                {isLoading ? 'Loading...' : 'Login'}
               </button>
             </form>
             

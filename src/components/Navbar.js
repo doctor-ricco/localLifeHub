@@ -1,12 +1,21 @@
+import Image from 'next/image';
+
 export default function Navbar({ hideAuthButtons = false }) {
   return (
     <nav className="bg-white border-b border-[#8ee2e2]/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="text-2xl font-bold text-[#2fb4b4]">
-              LocalLifeHub
-            </a>
+            <img 
+              src="/images/logo.png" 
+              alt="LocalLifeHub Logo" 
+              className="h-8 w-8 mr-2" 
+            />
+            <h1 className="text-2xl tracking-wide">
+              <span className="text-[#2A8A8A] font-bold">Local</span>
+              <span className="text-[#2A8A8A] font-bold">life</span>
+              <span className="text-[#5BBABA] font-extralight">Hub</span>
+            </h1>
           </div>
           {!hideAuthButtons && (
             <div className="flex items-center space-x-4">

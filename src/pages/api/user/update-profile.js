@@ -43,6 +43,7 @@ export default async function handler(req, res) {
           countryId,
           bio,
           interests: {
+            set: [],
             connectOrCreate: interestsArray.map(interestName => ({
               where: { name: interestName },
               create: { name: interestName }
