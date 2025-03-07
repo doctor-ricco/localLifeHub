@@ -26,8 +26,11 @@ export default async function handler(req, res) {
       }
     }
 
+    // Garantir que interests é um array antes de processar
+    const interestsArray = Array.isArray(interests) ? interests : [];
+
     // Se temos interesses para atualizar
-    if (Array.isArray(interests)) {
+    if (interestsArray.length > 0) {
       // Atualiza o usuário e seus interesses em uma única operação
       const updatedUser = await prisma.user.update({
         where: {
@@ -40,12 +43,9 @@ export default async function handler(req, res) {
           countryId,
           bio,
           interests: {
-            // Primeiro desconecta todos os interesses existentes
-            set: [],
-            // Depois conecta ou cria os novos interesses
-            connectOrCreate: interests.map(name => ({
-              where: { name },
-              create: { name }
+            connectOrCreate: interestsArray.map(interestName => ({
+              where: { name: interestName },
+              create: { name: interestName }
             }))
           }
         },

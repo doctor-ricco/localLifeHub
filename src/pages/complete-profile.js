@@ -19,16 +19,16 @@ export default function CompleteProfile() {
     phone: '',
     address: '',
     city: '',
-    country: '',
-    interests: []
+    countryId: '',
+    interests: [],
+    bio: ''
   });
 
   const [countries, setCountries] = useState([]);
-
-  const interests = [
-    'Photography', 'Cooking', 'Travel', 'Music',
-    'Sports', 'Reading', 'Art', 'Technology'
-  ];
+  const [availableInterests, setAvailableInterests] = useState([]);
+  const [interestError, setInterestError] = useState('');
+  const MAX_INTERESTS = 8;
+  const MIN_INTERESTS = 1;
 
   useEffect(() => {
     if (!hasCheckedSession.current && status === 'unauthenticated') {
@@ -52,6 +52,27 @@ export default function CompleteProfile() {
     fetchCountries();
   }, []);
 
+  useEffect(() => {
+    const fetchInterests = async () => {
+      try {
+        const response = await fetch('/api/interests/default');
+        const data = await response.json();
+        console.log('Raw interests data:', data);
+        
+        // Garantir que data é um array
+        const interestsArray = Array.isArray(data) ? data : [];
+        console.log('Processed interests array:', interestsArray);
+        
+        setAvailableInterests(interestsArray);
+      } catch (error) {
+        console.error('Detailed fetch error:', error);
+        setAvailableInterests([]);
+      }
+    };
+    
+    fetchInterests();
+  }, []);
+
   if (status === 'loading' || (status === 'unauthenticated' && !hasCheckedSession.current)) {
     return <div>Loading...</div>;
   }
@@ -62,8 +83,18 @@ export default function CompleteProfile() {
 
   const handleNext = (e) => {
     e.preventDefault();
+    
+    if (step === 2) {
+      const error = validateInterests(personalInfo.interests);
+      if (error) {
+        setInterestError(error);
+        return;
+      }
+    }
+    
     if (step < 3) {
       setStep(step + 1);
+      setInterestError('');
     }
   };
 
@@ -86,22 +117,31 @@ export default function CompleteProfile() {
     setError('');
 
     try {
+      console.log('Submitting data:', personalInfo); // Log para debug
+
       const response = await fetch('/api/user/update-profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(personalInfo),
+        body: JSON.stringify({
+          ...personalInfo,
+          // Garantir que interests é um array de nomes
+          interests: Array.isArray(personalInfo.interests) ? personalInfo.interests : []
+        }),
         credentials: 'include'
       });
 
       const data = await response.json();
+      console.log('Response data:', data); // Log para debug
 
       if (response.ok) {
         if (data.user?.interests) {
           setPersonalInfo(prev => ({
             ...prev,
-            interests: data.user.interests.map(interest => interest.name)
+            interests: Array.isArray(data.user.interests) 
+              ? data.user.interests.map(interest => interest.name)
+              : []
           }));
         }
         router.push('/dashboard');
@@ -109,7 +149,7 @@ export default function CompleteProfile() {
         throw new Error(data.message || 'Error updating profile');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Submit error:', error);
       setError(error.message);
     } finally {
       setIsSubmitting(false);
@@ -206,6 +246,22 @@ export default function CompleteProfile() {
         interests: newInterests
       };
     });
+  };
+
+  const validateInterests = (interests) => {
+    if (!interests || !Array.isArray(interests)) {
+      return 'Please select at least one interest';
+    }
+    
+    if (interests.length < MIN_INTERESTS) {
+      return `Please select at least ${MIN_INTERESTS} interest`;
+    }
+    
+    if (interests.length > MAX_INTERESTS) {
+      return `You can select up to ${MAX_INTERESTS} interests`;
+    }
+    
+    return '';
   };
 
   return (
@@ -307,26 +363,69 @@ export default function CompleteProfile() {
             {step === 2 && (
               <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-medium mb-2">
-                  Select Your Interests
+                  Select Your Interests (Min: {MIN_INTERESTS}, Max: {MAX_INTERESTS})
                 </label>
-                <div className="grid grid-cols-2 gap-4">
-                  {interests.map((interest) => (
-                    <label key={interest} className="flex items-center space-x-2 text-gray-700">
-                      <input
-                        type="checkbox"
-                        checked={personalInfo.interests.includes(interest)}
-                        onChange={(e) => {
-                          const newInterests = e.target.checked
-                            ? [...personalInfo.interests, interest]
-                            : personalInfo.interests.filter(i => i !== interest);
-                          setPersonalInfo({ ...personalInfo, interests: newInterests });
-                        }}
-                        className="form-checkbox h-4 w-4 text-primary-600"
-                      />
-                      <span>{interest}</span>
-                    </label>
-                  ))}
+                
+                {interestError && (
+                  <div className="mb-4 p-2 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+                    {interestError}
+                  </div>
+                )}
+                
+                <div className="mb-2 text-sm text-gray-500">
+                  Selected: {personalInfo.interests.length}/{MAX_INTERESTS}
                 </div>
+                
+                {Array.isArray(availableInterests) && availableInterests.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-4">
+                    {availableInterests.map((interest) => {
+                      const isSelected = personalInfo.interests.includes(interest.name);
+                      const isDisabled = personalInfo.interests.length >= MAX_INTERESTS && !isSelected;
+                      
+                      return (
+                        <label 
+                          key={interest.id} 
+                          className={`flex items-center p-3 border rounded-lg ${
+                            isSelected 
+                              ? 'bg-primary-50 border-primary-200' 
+                              : isDisabled 
+                                ? 'bg-gray-100 border-gray-200 cursor-not-allowed' 
+                                : 'border-gray-200 hover:bg-gray-50'
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            disabled={isDisabled}
+                            onChange={(e) => {
+                              const newInterests = e.target.checked
+                                ? [...personalInfo.interests, interest.name]
+                                : personalInfo.interests.filter(i => i !== interest.name);
+                              
+                              setPersonalInfo(prev => ({
+                                ...prev,
+                                interests: newInterests
+                              }));
+                              
+                              setInterestError('');
+                            }}
+                            className="form-checkbox h-4 w-4 text-primary-600"
+                          />
+                          <div className="ml-2 flex items-center">
+                            <span className="material-icons text-gray-500 mr-2 text-lg">
+                              {interest.icon || 'interests'}
+                            </span>
+                            <span className={isDisabled ? 'text-gray-400' : 'text-gray-700'}>
+                              {interest.name}
+                            </span>
+                          </div>
+                        </label>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No interests available</p>
+                )}
               </div>
             )}
 

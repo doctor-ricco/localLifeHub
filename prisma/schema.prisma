@@ -36,6 +36,15 @@ model User {
   countryId      String?
 }
 
+model DefaultInterest {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  icon      String?  // Para guardar o nome do ícone ou path do SVG
+  active    Boolean  @default(true)  // Para poder desativar interesses sem deletá-los
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Interest {
   id          String   @id @default(cuid())
   name        String   @unique
