@@ -93,8 +93,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navbar com fundo sólido */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar */}
       <nav className="bg-white border-b border-[#8ee2e2]/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -118,7 +118,7 @@ export default function Dashboard() {
                 </span>
               </div>
 
-              {/* Adicionar botão "Find a Host" apenas para guests */}
+              {/* Botão "Find a Host" apenas para guests */}
               {userData?.userType?.toLowerCase() === 'guest' && (
                 <button
                   onClick={() => router.push('/find-host')}
@@ -144,12 +144,9 @@ export default function Dashboard() {
       <main
         className="relative min-h-[calc(100vh-4rem)]"
         style={{
-          // Gradiente para sobrepôr ao background image
-          // linear-gradient(to bottom right, rgba(117, 212, 212, 0.9), rgba(142, 226, 226, 0.85), rgba(167, 235, 235, 0.8)),
-
           backgroundImage: `
-          linear-gradient(to bottom, rgba(63, 63, 63, 0.2), rgba(63, 63, 63, 0.3)),
-          url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+          linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), 
+          url("/images/krakow-1.jpg")
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -159,128 +156,422 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Profile Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
-                <div className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
-                      <span className="text-xl text-[#229494]">
-                        {userData?.name?.[0]?.toUpperCase() || '?'}
-                      </span>
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-semibold text-gray-900">{userData?.name}</h2>
-                      <p className="text-sm text-gray-500">{userData?.userType}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 space-y-4">
-                    <div>
-                      <h3 className="font-medium text-gray-700">Contact Information</h3>
-                      <hr className="my-2 border-gray-300" />
-                      <div className="mt-2 space-y-2">
-                        <p className="text-gray-600">Email: {userData?.email}</p>
-                        <div className="space-y-2">
-                          {userData?.phone && (
-                            <p className="text-gray-600">Phone: {userData.phone}</p>
-                          )}
-                          {userData?.address && (
-                            <p className="text-gray-600">Address: {userData.address}</p>
-                          )}
-                          {userData?.city && (
-                            <p className="text-gray-600">City: {userData.city}</p>
-                          )}
-                          {userData?.country && (
-                            <p className="text-gray-600">Country: {userData.country.name}</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <button
-                      onClick={() => router.push('/profile/edit-personal')}
-                      className="w-full px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
+              
+              {/* Profile Card - Estilo atualizado */}
+              <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
+                <div 
+                  style={{
+                    backgroundImage: 'url("")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '140px',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.6)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '20px'
+                    }}
+                  >
+                    <h2 
+                      style={{
+                        fontSize: '24px',
+                        fontWeight: '600',
+                        marginBottom: '10px',
+                        fontFamily: 'Poppins, sans-serif',
+                        letterSpacing: '0.5px',
+                        textAlign: 'center',
+                        color: 'white'
+                      }}
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                      </svg>
-                      Edit Personal Info
-                    </button>
+                      {userData?.name}
+                    </h2>
+                    <p 
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.5',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        marginBottom: '0',
+                        textAlign: 'center'
+                      }}
+                    >
+                      {userData?.userType}
+                    </p>
                   </div>
+                </div>
+
+                <div style={{ 
+                  backgroundColor: 'white', 
+                  padding: '30px 20px',
+                  borderBottomLeftRadius: '0.5rem',
+                  borderBottomRightRadius: '0.5rem',
+                  overflow: 'hidden'
+                }}>
+                  <h3 
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: '500',
+                      color: '#374151',
+                      marginBottom: '16px'
+                    }}
+                  >
+                    Contact Information
+                  </h3>
+                  <hr style={{ marginBottom: '16px' }} />
+                  
+                  <div style={{ marginBottom: '20px' }}>
+                    <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
+                      <span style={{ fontWeight: '500' }}><strong>Email: </strong></span>
+                      {userData?.email}
+                    </p>
+                    <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
+                      <span style={{ fontWeight: '500' }}><strong>Phone: </strong></span>
+                      {userData?.phone || 'Not provided'}
+                    </p>
+                    <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
+                      <span style={{ fontWeight: '500' }}><strong>Address: </strong></span>
+                      {userData?.address || 'Not provided'}
+                    </p>
+                    <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
+                      <span style={{ fontWeight: '500' }}><strong>City: </strong></span>
+                      {userData?.city || 'Not provided'}
+                    </p>
+                    <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
+                      <span style={{ fontWeight: '500' }}><strong>Country: </strong> </span>
+                      {typeof userData?.country === 'string' 
+                        ? userData?.country 
+                        : userData?.country?.name || 'Not provided'}
+                    </p>
+                  </div>
+                  
+                  <button
+                    onClick={() => router.push('/profile/edit-personal')}
+                    style={{
+                      backgroundColor: '#3b9b9b',
+                      color: 'white',
+                      padding: '14px 20px',
+                      borderRadius: '12px',
+                      width: '100%',
+                      fontWeight: '500',
+                      display: 'block',
+                      textAlign: 'center',
+                      border: 'none',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 6px -1px rgba(59, 155, 155, 0.3), 0 2px 4px -1px rgba(59, 155, 155, 0.2)',
+                      fontSize: '16px'
+                    }}
+                  >
+                    Edit Personal Info
+                  </button>
                 </div>
               </div>
 
-              {/* Interests Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
-                <div className="p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Interests</h2>
-                  <hr className="my-2 border-gray-200" />
-                  <div className="flex flex-wrap gap-2 min-h-[30px]">
+              {/* Interests Card - Estilo atualizado */}
+              <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
+                <div 
+                  style={{
+                    backgroundImage: 'url("")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '140px',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.6)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '20px'
+                    }}
+                  >
+                    <h2 
+                      style={{
+                        fontSize: '24px',
+                        fontWeight: '600',
+                        marginBottom: '10px',
+                        fontFamily: 'Poppins, sans-serif',
+                        letterSpacing: '0.5px',
+                        textAlign: 'center',
+                        color: 'white'
+                      }}
+                    >
+                      Your Interests
+                    </h2>
+                    <p 
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.5',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        marginBottom: '0',
+                        textAlign: 'center'
+                      }}
+                    >
+                      Connect with people who share your passions
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ 
+                  backgroundColor: 'white', 
+                  padding: '30px 20px',
+                  borderBottomLeftRadius: '0.5rem',
+                  borderBottomRightRadius: '0.5rem'
+                }}>
+                  <div 
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                      minHeight: '30px',
+                      marginBottom: '20px'
+                    }}
+                  >
                     {userData?.interests?.map((interest) => (
                       <span
                         key={interest.id}
-                        className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium bg-[#229494]/10 text-[#229494] hover:bg-[#229494]/20 transition-colors"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          padding: '6px 12px',
+                          borderRadius: '16px',
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          backgroundColor: 'rgba(34, 148, 148, 0.1)',
+                          color: '#229494'
+                        }}
                       >
                         {interestIcons[interest.name]}
                         {interest.name}
                       </span>
                     ))}
                     {(!userData?.interests || userData.interests.length === 0) && (
-                      <span className="text-sm text-gray-500 italic">
+                      <span style={{ fontSize: '14px', color: '#6B7280', fontStyle: 'italic' }}>
                         No interests added yet
                       </span>
                     )}
                   </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <button
-                      onClick={() => router.push('/profile/edit-interests')}
-                      className="w-full px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
-                      Edit Interests
-                    </button>
-                  </div>
+                  
+                  <button
+                    onClick={() => router.push('/profile/edit-interests')}
+                    style={{
+                      backgroundColor: '#3b9b9b',
+                      color: 'white',
+                      padding: '14px 20px',
+                      borderRadius: '12px',
+                      width: '100%',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 6px -1px rgba(59, 155, 155, 0.3), 0 2px 4px -1px rgba(59, 155, 155, 0.2)',
+                      fontSize: '16px'
+                    }}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit Interests
+                  </button>
                 </div>
               </div>
 
-              {/* Bio Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
-                <div className="p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">About You</h2>
-                  <hr className="my-2 border-gray-300" />
-                  <div className="min-h-[100px]">
-                    <p className="text-gray-600">
-                      {userData?.bio || 'No bio provided yet.'}
+              {/* Bio Card - Estilo atualizado com imagem e design semelhante à página inicial */}
+              <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
+                <div 
+                  style={{
+                    backgroundImage: 'url("")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '140px',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.6)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '20px'
+                    }}
+                  >
+                    <h2 
+                      style={{
+                        fontSize: '24px',
+                        fontWeight: '600',
+                        marginBottom: '10px',
+                        fontFamily: 'Poppins, sans-serif',
+                        letterSpacing: '0.5px',
+                        textAlign: 'center',
+                        color: 'white'
+                      }}
+                    >
+                      About You
+                    </h2>
+                    <p 
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.5',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        marginBottom: '0',
+                        textAlign: 'center'
+                      }}
+                    >
+                      Share your story with potential hosts and guests
                     </p>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <button
-                      onClick={() => router.push('/profile/edit-bio')}
-                      className="w-full px-4 py-2 text-sm bg-[#3b9b9b] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
+                </div>
+
+                <div style={{ 
+                  backgroundColor: 'white', 
+                  padding: '30px 20px',
+                  borderBottomLeftRadius: '0.5rem',
+                  borderBottomRightRadius: '0.5rem'
+                }}>
+                  <div 
+                    style={{
+                      minHeight: '100px',
+                      marginBottom: '20px'
+                    }}
+                  >
+                    <p 
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.6',
+                        color: '#4B5563'
+                      }}
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
-                      Edit Bio
-                    </button>
+                      {userData?.bio || 'No bio provided yet. Tell others about yourself, your travel style, and what you love about your city.'}
+                    </p>
                   </div>
+                  
+                  <button
+                    onClick={() => router.push('/profile/edit-bio')}
+                    style={{
+                      backgroundColor: '#3b9b9b',
+                      color: 'white',
+                      padding: '14px 20px',
+                      borderRadius: '12px',
+                      width: '100%',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 6px -1px rgba(59, 155, 155, 0.3), 0 2px 4px -1px rgba(59, 155, 155, 0.2)',
+                      fontSize: '16px'
+                    }}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit Bio
+                  </button>
                 </div>
               </div>
 
-              {/* Activity Card */}
-              <div className="md:col-span-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm border border-[#8ee2e2]/20 hover:shadow-md hover:border-[#8ee2e2]/30 transition-all duration-200">
-                <div className="p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
-                  <div className="border-t border-gray-200">
-                    <div className="py-4">
-                      <p className="text-gray-600">Account created on {new Date(userData?.createdAt).toLocaleDateString()}</p>
-                      <p className="text-gray-600">Last updated on {new Date(userData?.updatedAt).toLocaleDateString()}</p>
-                    </div>
+              {/* Activity Card - Estilo atualizado */}
+              <div className="md:col-span-3 rounded-lg shadow-sm overflow-hidden">
+                <div 
+                  style={{
+                    backgroundImage: 'url("")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '100px',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.6)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '20px'
+                    }}
+                  >
+                    <h2 
+                      style={{
+                        fontSize: '24px',
+                        fontWeight: '600',
+                        marginBottom: '10px',
+                        fontFamily: 'Poppins, sans-serif',
+                        letterSpacing: '0.5px',
+                        textAlign: 'center',
+                        color: 'white'
+                      }}
+                    >
+                      Recent Activity
+                    </h2>
+                    <p 
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.5',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                        marginBottom: '0',
+                        textAlign: 'center'
+                      }}
+                    >
+                      Keep track of your account changes and interactions
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ backgroundColor: 'white', padding: '30px 20px' }}>
+                  <div style={{ borderBottom: '1px solid #E5E7EB', paddingBottom: '16px' }}>
+                    <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
+                      Account created on {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'Unknown'}
+                    </p>
+                    <p style={{ fontSize: '14px', color: '#4B5563' }}>
+                      Last updated on {userData?.updatedAt ? new Date(userData.updatedAt).toLocaleDateString() : 'Unknown'}
+                    </p>
                   </div>
                 </div>
               </div>

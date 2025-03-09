@@ -81,7 +81,7 @@ export default function EditBio() {
         style={{
           backgroundImage: `
           linear-gradient(to bottom, rgba(63, 63, 63, 0.2), rgba(63, 63, 63, 0.3)),
-            url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+            url('/images/walking.jpg')
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -89,7 +89,7 @@ export default function EditBio() {
         }}
       >
         <div className="max-w-3xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-md border border-[#8ee2e2]/20 p-6">
+          <div className="bg-white/60 backdrop-blur-sm rounded-lg shadow-md border border-[#8ee2e2]/20 p-6">
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-gray-900 mb-2">Edit Bio</h1>
               <p className="text-gray-600">Tell others about yourself</p>

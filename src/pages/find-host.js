@@ -100,7 +100,7 @@ export default function FindHost() {
         style={{
           backgroundImage: `
             linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)),
-            url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+            url('/images/boat.jpg')
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -119,7 +119,7 @@ export default function FindHost() {
           <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-md p-6 border border-[#8ee2e2]/20">
             <div className="mb-6">
               <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
-                Where do you want to go?
+              What's your destination?
               </label>
               <select
                 id="city"
@@ -140,7 +140,7 @@ export default function FindHost() {
 
             <button
               onClick={handleSearch}
-              className="w-full px-6 py-3 bg-[#3b9b9b] hover:bg-[#229494] text-white rounded-md hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
+              className="w-full px-6 py-3 bg-[#3b9b9b] hover:bg-[#229494] text-white rounded-md hover:bg-[#229494] transition-colors flex items-center justify-center gap-2"
             >
               <span className="material-icons">search</span>
               Find Hosts

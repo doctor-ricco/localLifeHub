@@ -7,7 +7,7 @@ export default function Home() {
             backgroundColor: '#f5f5f7',
             minHeight: '100vh',
             fontFamily: 'Poppins, sans-serif',
-            backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1368&q=80")',
+            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("/images/krakow.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed'
@@ -43,8 +43,6 @@ export default function Home() {
                             LocalLifeHub.com
 
                         </a></h1>
-
-
                     <nav>
                         <a
                             href="/signin"
@@ -80,7 +78,7 @@ export default function Home() {
                     overflow: 'hidden'
                 }}>
                     <div style={{
-                        backgroundImage: 'url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")',
+                        backgroundImage: 'url("/images/couple.jpg")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         height: '240px',
@@ -202,9 +200,12 @@ export default function Home() {
 
             <footer style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                padding: '20px',
+                padding: '15px',
                 borderTop: '1px solid #e5e7eb',
-                marginTop: 'auto'
+                marginTop: 'auto',
+                position: 'fixed',
+                bottom: '0',
+                width: '100%'
             }}>
                 <div style={{
                     maxWidth: '1200px',

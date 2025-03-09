@@ -171,7 +171,7 @@ export default function HostProfile() {
         style={{
           backgroundImage: `
             linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
-            url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+            url('/images/new-york.jpg')
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -182,9 +182,9 @@ export default function HostProfile() {
           <div className="mb-6">
             <button
               onClick={() => router.back()}
-              className="flex items-center text-[#3b9b9b] hover:text-[#229494]"
+              className="flex items-center text-white hover:text-white/80"
             >
-              <span className="material-icons text-sm mr-1 text-[#3b9b9b] hover:text-[#229494]">arrow_back</span>
+              <span className="material-icons text-sm mr-1 text-white hover:text-white/80">arrow_back</span>
               Back to Results
             </button>
           </div>

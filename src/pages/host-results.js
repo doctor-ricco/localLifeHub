@@ -87,8 +87,8 @@ export default function HostResults() {
         className="relative min-h-[calc(100vh-4rem)]"
         style={{
           backgroundImage: `
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
-            url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')
+            linear-gradient(rgba(6, 90, 73, 0.4), rgba(2, 47, 46, 0.2)),
+            url('/images/watermelon.jpg')
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -99,16 +99,16 @@ export default function HostResults() {
           <div className="mb-8">
             <button
               onClick={() => router.push('/find-host')}
-              className="flex items-center text-[#3b9b9b] hover:text-[#229494]"
+              className="flex items-center text-white hover:text-white/60"
             >
-              <span className="material-icons text-sm mr-1 text-[#3b9b9b] hover:text-[#229494]">arrow_back</span>
+              <span className="material-icons text-sm mr-1 text-white hover:text-white/60">arrow_back</span>
               Back to Search
             </button>
             
             <h1 className="text-3xl font-bold text-white mt-4">
               Hosts in {city}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-white">
               {hosts.length} {hosts.length === 1 ? 'host' : 'hosts'} found
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function HostResults() {
               {hosts.map((host) => (
                 <div 
                   key={host.id} 
-                  className="bg-white/80 rounded-lg shadow-md hover:shadow-lg border border-[#8ee2e2]/20 hover:border-[#8ee2e2]/30 transition-all duration-200"
+                  className="bg-white/60 rounded-lg shadow-md hover:shadow-lg border border-[#8ee2e2]/20 hover:border-[#8ee2e2]/30 transition-all duration-200"
                 >
                   <div className="p-6">
                     <div className="flex items-center mb-4">
@@ -191,7 +191,7 @@ export default function HostResults() {
                     <div className="mt-4 pt-4 border-t border-gray-200">
                       <button
                         onClick={() => router.push(`/host/${host.id}`)}
-                        className="w-full px-4 py-2 text-sm bg-[#3b9b9b] hover:bg-[#229494] text-white rounded-md hover:bg-primary-700 transition-colors"
+                        className="w-full px-4 py-2 text-sm bg-[#3b9b9b] hover:bg-[#229494] text-white rounded-md hover:bg-[#229494] transition-colors"
                       >
                         View Profile
                       </button>
