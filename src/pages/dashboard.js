@@ -50,6 +50,31 @@ export default function Dashboard() {
       <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
+    ),
+    "Local Cuisine": (
+      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    "Cultural Events": (
+      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    ),
+    "Art & Museums": (
+      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+      </svg>
+    ),
+    "Music & Concerts": (
+      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+      </svg>
+    ),
+    "Local Markets": (
+      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
     )
   };
 
@@ -156,10 +181,10 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
+
               {/* Profile Card - Estilo atualizado */}
               <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
-                <div 
+                <div
                   style={{
                     backgroundImage: 'url("")',
                     backgroundSize: 'cover',
@@ -171,7 +196,7 @@ export default function Dashboard() {
                     justifyContent: 'center'
                   }}
                 >
-                  <div 
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -186,7 +211,7 @@ export default function Dashboard() {
                       padding: '20px'
                     }}
                   >
-                    <h2 
+                    <h2
                       style={{
                         fontSize: '24px',
                         fontWeight: '600',
@@ -199,7 +224,7 @@ export default function Dashboard() {
                     >
                       {userData?.name}
                     </h2>
-                    <p 
+                    <p
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.5',
@@ -213,14 +238,14 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div style={{ 
-                  backgroundColor: 'white', 
+                <div style={{
+                  backgroundColor: 'white',
                   padding: '30px 20px',
                   borderBottomLeftRadius: '0.5rem',
                   borderBottomRightRadius: '0.5rem',
                   overflow: 'hidden'
                 }}>
-                  <h3 
+                  <h3
                     style={{
                       fontSize: '18px',
                       fontWeight: '500',
@@ -231,7 +256,7 @@ export default function Dashboard() {
                     Contact Information
                   </h3>
                   <hr style={{ marginBottom: '16px' }} />
-                  
+
                   <div style={{ marginBottom: '20px' }}>
                     <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
                       <span style={{ fontWeight: '500' }}><strong>Email: </strong></span>
@@ -251,12 +276,12 @@ export default function Dashboard() {
                     </p>
                     <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '8px' }}>
                       <span style={{ fontWeight: '500' }}><strong>Country: </strong> </span>
-                      {typeof userData?.country === 'string' 
-                        ? userData?.country 
+                      {typeof userData?.country === 'string'
+                        ? userData?.country
                         : userData?.country?.name || 'Not provided'}
                     </p>
                   </div>
-                  
+
                   <button
                     onClick={() => router.push('/profile/edit-personal')}
                     style={{
@@ -281,7 +306,7 @@ export default function Dashboard() {
 
               {/* Interests Card - Estilo atualizado */}
               <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
-                <div 
+                <div
                   style={{
                     backgroundImage: 'url("")',
                     backgroundSize: 'cover',
@@ -293,7 +318,7 @@ export default function Dashboard() {
                     justifyContent: 'center'
                   }}
                 >
-                  <div 
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -308,7 +333,7 @@ export default function Dashboard() {
                       padding: '20px'
                     }}
                   >
-                    <h2 
+                    <h2
                       style={{
                         fontSize: '24px',
                         fontWeight: '600',
@@ -321,7 +346,7 @@ export default function Dashboard() {
                     >
                       Your Interests
                     </h2>
-                    <p 
+                    <p
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.5',
@@ -335,13 +360,13 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div style={{ 
-                  backgroundColor: 'white', 
+                <div style={{
+                  backgroundColor: 'white',
                   padding: '30px 20px',
                   borderBottomLeftRadius: '0.5rem',
                   borderBottomRightRadius: '0.5rem'
                 }}>
-                  <div 
+                  <div
                     style={{
                       display: 'flex',
                       flexWrap: 'wrap',
@@ -374,7 +399,7 @@ export default function Dashboard() {
                       </span>
                     )}
                   </div>
-                  
+
                   <button
                     onClick={() => router.push('/profile/edit-interests')}
                     style={{
@@ -404,7 +429,7 @@ export default function Dashboard() {
 
               {/* Bio Card - Estilo atualizado com imagem e design semelhante à página inicial */}
               <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
-                <div 
+                <div
                   style={{
                     backgroundImage: 'url("")',
                     backgroundSize: 'cover',
@@ -416,7 +441,7 @@ export default function Dashboard() {
                     justifyContent: 'center'
                   }}
                 >
-                  <div 
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -431,7 +456,7 @@ export default function Dashboard() {
                       padding: '20px'
                     }}
                   >
-                    <h2 
+                    <h2
                       style={{
                         fontSize: '24px',
                         fontWeight: '600',
@@ -444,7 +469,7 @@ export default function Dashboard() {
                     >
                       About You
                     </h2>
-                    <p 
+                    <p
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.5',
@@ -458,19 +483,19 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div style={{ 
-                  backgroundColor: 'white', 
+                <div style={{
+                  backgroundColor: 'white',
                   padding: '30px 20px',
                   borderBottomLeftRadius: '0.5rem',
                   borderBottomRightRadius: '0.5rem'
                 }}>
-                  <div 
+                  <div
                     style={{
                       minHeight: '100px',
                       marginBottom: '20px'
                     }}
                   >
-                    <p 
+                    <p
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.6',
@@ -480,7 +505,7 @@ export default function Dashboard() {
                       {userData?.bio || 'No bio provided yet. Tell others about yourself, your travel style, and what you love about your city.'}
                     </p>
                   </div>
-                  
+
                   <button
                     onClick={() => router.push('/profile/edit-bio')}
                     style={{
@@ -510,7 +535,7 @@ export default function Dashboard() {
 
               {/* Activity Card - Estilo atualizado */}
               <div className="md:col-span-3 rounded-lg shadow-sm overflow-hidden">
-                <div 
+                <div
                   style={{
                     backgroundImage: 'url("")',
                     backgroundSize: 'cover',
@@ -522,7 +547,7 @@ export default function Dashboard() {
                     justifyContent: 'center'
                   }}
                 >
-                  <div 
+                  <div
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -537,7 +562,7 @@ export default function Dashboard() {
                       padding: '20px'
                     }}
                   >
-                    <h2 
+                    <h2
                       style={{
                         fontSize: '24px',
                         fontWeight: '600',
@@ -550,7 +575,7 @@ export default function Dashboard() {
                     >
                       Recent Activity
                     </h2>
-                    <p 
+                    <p
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.5',
