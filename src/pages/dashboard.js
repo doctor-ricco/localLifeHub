@@ -124,16 +124,21 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <img
-                src="/images/logo.png"
-                alt="LocalLifeHub Logo"
-                className="h-8 w-8 mr-2"
-              />
-              <h1 className="text-2xl tracking-wide">
-                <span className="text-[#2A8A8A] font-bold">Local</span>
-                <span className="text-[#2A8A8A] font-bold">life</span>
-                <span className="text-[#5BBABA] font-extralight">Hub</span>
-              </h1>
+              <a 
+                href="/dashboard" 
+                className="flex items-center"
+              >
+                <img
+                  src="/images/logo.png"
+                  alt="LocalLifeHub Logo"
+                  className="h-8 w-8 mr-2"
+                />
+                <h1 className="text-2xl tracking-wide">
+                  <span className="text-[#2A8A8A] font-bold">Local</span>
+                  <span className="text-[#2A8A8A] font-bold">life</span>
+                  <span className="text-[#5BBABA] font-extralight">Hub</span>
+                </h1>
+              </a>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center bg-[#2A8A8A]/10 px-4 py-2 rounded-md">

@@ -30,19 +30,41 @@ export default function Home() {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-
-                    <h1 style={{
-                        fontSize: '24px',
-                        fontWeight: 'bold',
-                        color: '#3b9b9b',
-                        fontFamily: 'Poppins, sans-serif',
-                        letterSpacing: '0.5px'
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center'
                     }}>
-                        <a href="/signin">
-
-                            LocalLifeHub.com
-
-                        </a></h1>
+                        <a 
+                            href="/"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            <img 
+                                src="/images/logo.png" 
+                                alt="LocalLifeHub Logo" 
+                                style={{
+                                    height: '32px',
+                                    width: '32px',
+                                    marginRight: '8px'
+                                }}
+                            />
+                            <h1 style={{
+                                fontSize: '24px',
+                                fontWeight: 'bold',
+                                color: '#3b9b9b',
+                                fontFamily: 'Poppins, sans-serif',
+                                letterSpacing: '0.5px',
+                                margin: 0
+                            }}>
+                                <span style={{ color: '#2A8A8A', fontWeight: 'bold' }}>Local</span>
+                                <span style={{ color: '#2A8A8A', fontWeight: 'bold' }}>life</span>
+                                <span style={{ color: '#5BBABA', fontWeight: 'lighter' }}>Hub</span>
+                            </h1>
+                        </a>
+                    </div>
                     <nav>
                         <a
                             href="/signin"
