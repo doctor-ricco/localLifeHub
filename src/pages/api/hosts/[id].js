@@ -66,6 +66,7 @@ export default async function handler(req, res) {
         city: host.city,
         country: host.country,
         bio: host.bio,
+        profileImage: host.profileImage,
         interests: host.interests,
         matchPercentage,
         sharedInterests

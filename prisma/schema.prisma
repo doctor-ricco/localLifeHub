@@ -29,6 +29,7 @@ model User {
   address        String?
   city           String?
   bio            String?
+  profileImage   String?   // URL da imagem de perfil
   interests      Interest[]
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt

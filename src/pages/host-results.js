@@ -134,13 +134,26 @@ export default function HostResults() {
                 <div 
                   key={host.id} 
                   className="bg-white/60 rounded-lg shadow-md hover:shadow-lg border border-[#8ee2e2]/20 hover:border-[#8ee2e2]/30 transition-all duration-200"
+                  onClick={() => router.push(`/host/${host.id}`)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div className="p-6">
                     <div className="flex items-center mb-4">
-                      <div className="h-12 w-12 flex-shrink-0 rounded-full bg-primary-100 flex items-center justify-center">
-                        <span className="text-xl text-primary-600">
-                          {host.name[0].toUpperCase()}
-                        </span>
+                      {/* Imagem de perfil */}
+                      <div className="h-16 w-16 flex-shrink-0 rounded-full overflow-hidden border border-gray-200">
+                        {host.profileImage ? (
+                          <img 
+                            src={host.profileImage} 
+                            alt={`${host.name}'s profile`} 
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-[#e5e7eb] flex items-center justify-center">
+                            <span className="material-icons text-gray-400 text-2xl">
+                              account_circle
+                            </span>
+                          </div>
+                        )}
                       </div>
                       
                       <div className="ml-4 flex-grow min-w-0">
@@ -192,11 +205,21 @@ export default function HostResults() {
                         </div>
                       </div>
                     )}
+
+                    <div className="mt-4">
+                      <div className="text-sm text-gray-500">
+                        <span className="font-medium text-gray-700">Match: </span>
+                        <span className="text-[#229494] font-semibold">{host.matchPercentage}%</span>
+                      </div>
+                    </div>
                     
                     <div className="mt-4 pt-4 border-t border-gray-200">
                       <button
-                        onClick={() => router.push(`/host/${host.id}`)}
-                        className="w-full px-4 py-2 text-sm bg-[#3b9b9b] hover:bg-[#229494] text-white rounded-md hover:bg-[#229494] transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Impedir que o clique propague para o card
+                          router.push(`/host/${host.id}`);
+                        }}
+                        className="w-full px-4 py-2 text-sm bg-[#3b9b9b] hover:bg-[#229494] text-white rounded-md transition-colors"
                       >
                         View Profile
                       </button>

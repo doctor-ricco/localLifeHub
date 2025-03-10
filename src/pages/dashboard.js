@@ -189,19 +189,19 @@ export default function Dashboard() {
 
               {/* Profile Card - Estilo atualizado */}
               <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
-                <div
+                <div 
                   style={{
-                    backgroundImage: 'url("")',
+                    backgroundImage: '',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    height: '140px',
+                    height: '240px',
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}
                 >
-                  <div
+                  <div 
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -216,7 +216,47 @@ export default function Dashboard() {
                       padding: '20px'
                     }}
                   >
-                    <h2
+                    {/* Foto de perfil */}
+                    <div 
+                      style={{
+                        width: '120px',
+                        height: '120px',
+                        borderRadius: '50%',
+                        border: '4px solid white',
+                        overflow: 'hidden',
+                        marginBottom: '15px',
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                      }}
+                    >
+                      {userData?.profileImage ? (
+                        <img 
+                          src={userData.profileImage} 
+                          alt={userData.name} 
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                          }}
+                        />
+                      ) : (
+                        <div 
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#e5e7eb',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <span className="material-icons" style={{ fontSize: '60px', color: '#9ca3af' }}>
+                            account_circle
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <h2 
                       style={{
                         fontSize: '24px',
                         fontWeight: '600',
@@ -229,7 +269,7 @@ export default function Dashboard() {
                     >
                       {userData?.name}
                     </h2>
-                    <p
+                    <p 
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.5',
@@ -243,14 +283,8 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div style={{
-                  backgroundColor: 'white',
-                  padding: '30px 20px',
-                  borderBottomLeftRadius: '0.5rem',
-                  borderBottomRightRadius: '0.5rem',
-                  overflow: 'hidden'
-                }}>
-                  <h3
+                <div style={{ backgroundColor: 'white', padding: '30px 20px', borderBottomLeftRadius: '0.5rem', borderBottomRightRadius: '0.5rem', overflow: 'hidden' }}>
+                  <h3 
                     style={{
                       fontSize: '18px',
                       fontWeight: '500',
@@ -313,10 +347,10 @@ export default function Dashboard() {
               <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
                 <div
                   style={{
-                    backgroundImage: 'url("")',
+                    backgroundImage: 'url("/images/travel.jpg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    height: '140px',
+                    height: '240px',
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
@@ -436,10 +470,10 @@ export default function Dashboard() {
               <div className="rounded-lg shadow-sm overflow-hidden" style={{ borderRadius: '0.5rem' }}>
                 <div
                   style={{
-                    backgroundImage: 'url("")',
+                    backgroundImage: 'url("/images/backpack.jpg")',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    height: '140px',
+                    height: '240px',
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',

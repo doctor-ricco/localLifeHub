@@ -43,10 +43,10 @@ export default async function handler(req, res) {
     // Buscar hosts com correspondência exata ou parcial na cidade
     const hosts = await prisma.user.findMany({
       where: {
-        userType: 'HOST', // Garantir que estamos buscando por hosts (em maiúsculas)
+        userType: 'HOST',
         city: {
           contains: cityName,
-          mode: 'insensitive' // Case insensitive
+          mode: 'insensitive'
         }
       },
       include: {
@@ -81,6 +81,7 @@ export default async function handler(req, res) {
         city: host.city,
         country: host.country,
         bio: host.bio,
+        profileImage: host.profileImage,
         interests: host.interests,
         matchScore: sharedInterests.length,
         matchPercentage,

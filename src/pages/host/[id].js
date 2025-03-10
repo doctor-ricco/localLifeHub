@@ -209,10 +209,20 @@ export default function HostProfile() {
             {/* Informações do host - sem o flex container anterior */}
             <div className="mb-6">
               <div className="flex items-center mb-4">
-                <div className="h-16 w-16 rounded-full bg-[#229494]/20 flex items-center justify-center">
-                  <span className="text-2xl text-[#229494]">
-                    {host.name?.[0]?.toUpperCase() || 'H'}
-                  </span>
+                <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-[#229494]/20">
+                  {host.profileImage ? (
+                    <img 
+                      src={host.profileImage} 
+                      alt={`${host.name}'s profile`} 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#229494]/20 flex items-center justify-center">
+                      <span className="material-icons text-[#229494] text-3xl">
+                        account_circle
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="ml-4">
                   <h2 className="text-2xl font-bold text-gray-900">{host.name}</h2>

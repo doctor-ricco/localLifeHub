@@ -3,6 +3,153 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { validatePhone } from '../../utils/validation';
 
+// Componente de Upload de Imagem
+function ImageUpload({ currentImage, onImageUpdate }) {
+  const [preview, setPreview] = useState(currentImage);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+  
+  useEffect(() => {
+    // Atualizar preview quando a prop currentImage mudar
+    setPreview(currentImage);
+  }, [currentImage]);
+  
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // Limpar erros anteriores
+    setError('');
+    
+    console.log("Arquivo selecionado:", {
+      nome: file.name,
+      tipo: file.type,
+      tamanho: `${(file.size / 1024).toFixed(2)}KB`,
+      ultimaModificacao: new Date(file.lastModified).toISOString()
+    });
+    
+    // Verificação mais permissiva do tipo de arquivo
+    const validMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+    const isValidType = validMimeTypes.includes(file.type);
+    const isValidExtension = validExtensions.includes(fileExtension);
+    
+    // Se tipo ou extensão é válida, prossegue
+    if (!isValidType && !isValidExtension) {
+      console.error("Tipo de arquivo inválido:", file.type, fileExtension);
+      setError(`Tipo de arquivo inválido: ${file.type}. Apenas JPG, PNG, GIF e WebP são permitidos.`);
+      return;
+    }
+    
+    if (file.size > 5 * 1024 * 1024) {
+      setError("A imagem deve ter menos de 5MB");
+      return;
+    }
+    
+    // Vamos ler o arquivo como base64
+    const reader = new FileReader();
+    
+    // Quando o arquivo for carregado como base64
+    reader.onload = async () => {
+      try {
+        // Definir preview
+        setPreview(reader.result);
+        setUploading(true);
+        
+        console.log("Iniciando upload da imagem...");
+        
+        // Enviar dados da imagem como base64 para a API
+        const response = await fetch("/api/user/upload-profile-image", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            imageData: reader.result // Dados da imagem em base64
+          }),
+        });
+        
+        // Verificar se a resposta foi bem-sucedida
+        if (!response.ok) {
+          // Tentar obter mais detalhes sobre o erro
+          let errorMessage = "Erro ao fazer upload da imagem";
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.error || errorMessage;
+          } catch (e) {
+            // Se não conseguir ler o JSON, usar o status text
+            errorMessage = response.statusText || errorMessage;
+          }
+          
+          console.error("Erro no upload:", response.status, errorMessage);
+          throw new Error(errorMessage);
+        }
+        
+        const data = await response.json();
+        console.log("Resposta do servidor:", data);
+        
+        if (data.success) {
+          onImageUpdate(data.imageUrl);
+          console.log("Imagem atualizada com sucesso:", data.imageUrl);
+        } else {
+          throw new Error("O servidor não retornou um status de sucesso");
+        }
+      } catch (error) {
+        console.error("Erro ao processar upload da imagem:", error);
+        setError(error.message || "Erro ao fazer upload da imagem");
+      } finally {
+        setUploading(false);
+      }
+    };
+    
+    // Iniciar a leitura do arquivo como base64
+    reader.readAsDataURL(file);
+  };
+  
+  return (
+    <div className="mb-6">
+      <label className="block text-gray-700 font-medium mb-2">Foto de Perfil</label>
+      <div className="flex items-center space-x-6">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden border">
+          {preview ? (
+            <img 
+              src={preview} 
+              alt="Preview de perfil" 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              <span className="material-icons text-gray-400 text-3xl">account_circle</span>
+            </div>
+          )}
+          {uploading && (
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+            </div>
+          )}
+        </div>
+        <div>
+          <label className="block">
+            <span className="px-4 py-2 bg-[#3b9b9b] text-white rounded-md cursor-pointer hover:bg-[#229494] transition-colors">
+              Upload Photo
+            </span>
+            <input 
+              type="file" 
+              className="hidden" 
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </label>
+          <p className="text-sm text-gray-500 mt-1">JPG, PNG ou GIF. Máx 5MB.</p>
+          {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function EditPersonal() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -12,6 +159,7 @@ export default function EditPersonal() {
     city: '',
     countryId: ''
   });
+  const [profileImage, setProfileImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [countries, setCountries] = useState([]);
@@ -30,6 +178,7 @@ export default function EditPersonal() {
         city: data.user.city || '',
         countryId: data.user.countryId || ''
       });
+      setProfileImage(data.user.profileImage || null);
     };
     fetchData();
   }, [status]);
@@ -136,6 +285,12 @@ export default function EditPersonal() {
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
+                {/* Componente de Upload de Imagem */}
+                <ImageUpload 
+                  currentImage={profileImage} 
+                  onImageUpdate={(url) => setProfileImage(url)} 
+                />
+                
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Phone Number
@@ -144,8 +299,8 @@ export default function EditPersonal() {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2 border border-[#229494]/30 rounded-md focus:ring-[#229494] focus:border-[#229494] text-gray-700"
-                    placeholder="+1 234-567-8900"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#229494]"
+                    placeholder="+123 456 7890"
                   />
                 </div>
 
