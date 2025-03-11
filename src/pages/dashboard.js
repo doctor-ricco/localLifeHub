@@ -224,8 +224,12 @@ export default function Dashboard() {
                         borderRadius: '50%',
                         border: '4px solid white',
                         overflow: 'hidden',
+                        marginTop: '40px',
                         marginBottom: '15px',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                        aspectRatio: '1 / 1',  
+                        minWidth: '120px',     
+                        minHeight: '120px'     
                       }}
                     >
                       {userData?.profileImage ? (
@@ -235,7 +239,8 @@ export default function Dashboard() {
                           style={{
                             width: '100%',
                             height: '100%',
-                            objectFit: 'cover'
+                            objectFit: 'cover',
+                            objectPosition: 'center'
                           }}
                         />
                       ) : (
